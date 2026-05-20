@@ -1,7 +1,14 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly.express as px
+
+try:
+    import plotly.express as px
+except ModuleNotFoundError as err:
+    raise ModuleNotFoundError(
+        "The plotly package is required to run this dashboard. "
+        "Install it with `pip install plotly` in the active Python environment."
+    ) from err
 
 # --- Dashboard Configuration ---
 st.set_page_config(page_title="APL Logistics Dashboard", layout="wide")
@@ -82,7 +89,7 @@ with chart_col1:
         height=550
     )
     # Render the plotly chart in Streamlit
-    st.plotly_chart(fig_cat, use_container_width=True)
+    st.plotly_chart(fig_cat, width='stretch')
 
 with chart_col2:
     # --- Discount Impact Line Chart ---
@@ -102,4 +109,4 @@ with chart_col2:
     fig_disc.add_hline(y=0, line_dash="dash", line_color="red", annotation_text="Break-Even (0% Profit)")
     
     # Render the plotly chart in Streamlit
-    st.plotly_chart(fig_disc, use_container_width=True)
+    st.plotly_chart(fig_disc, width='stretch')
